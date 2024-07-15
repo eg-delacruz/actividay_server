@@ -13,18 +13,16 @@ import data from './data.js';
 
 //CORS
 const ACCEPTED_ORIGINS = [
-  'http://localhost:3000/',
-  'https://actividay.vercel.app/',
+  'https://actividay.vercel.app/, http://localhost:3000/',
 ];
 
 app.get('/', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  // const origin = req.header('origin');
-  // console.log({ origin });
+  //CORS
+  const ORIGIN = req.headers.origin;
 
-  // if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-  //   res.header('Access-Control-Allow-Origin', origin);
-  // }
+  if (ACCEPTED_ORIGINS.includes(ORIGIN)) {
+    res.setHeader('Access-Control-Allow-Origin', ORIGIN);
+  }
 
   //Securing route with secret key
   const SECRET_KEY = process.env.SERVER_SECRET_KEY;
