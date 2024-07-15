@@ -18,21 +18,22 @@ const ACCEPTED_ORIGINS = [
 
 app.get('/', (req, res) => {
   //CORS
-  const ORIGIN = req.headers.origin;
+  const origin = req.headers.origin;
 
-  if (ACCEPTED_ORIGINS.includes(ORIGIN)) {
-    res.setHeader('Access-Control-Allow-Origin', ORIGIN);
+  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
+    res.header('Access-Control-Allow-Origin', origin);
   }
 
   //Securing route with secret key
   const SECRET_KEY = process.env.SERVER_SECRET_KEY;
 
-  if (req.headers.secret_key === SECRET_KEY) {
-    const randomIndex = Math.floor(Math.random() * data.activities.length);
-    res.status(200).json(data.activities[randomIndex]);
-  } else {
-    res.status(403).json({ error: 'Access denied' });
-  }
+  // if (req.headers.secret_key === SECRET_KEY) {
+  const randomIndex = Math.floor(Math.random() * data.activities.length);
+  //Return an object that can be seen in the browser
+  res.send(data.activities[randomIndex]);
+  // } else {
+  //res.status(403).json({ error: 'Access denied' });
+  // }
 });
 
 server.listen(config.port, () => {
