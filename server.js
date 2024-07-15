@@ -19,6 +19,7 @@ const ACCEPTED_ORIGINS = [
 
 app.get('/', (req, res) => {
   const origin = req.header('origin');
+  console.log({ origin });
 
   if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
     res.header('Access-Control-Allow-Origin', origin);
